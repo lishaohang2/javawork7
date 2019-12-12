@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		*{
+			padding: 0px;
+			margin: 0px;
+		}
+		ul,li{
+			list-style: none;
+		}
+		.box{
+			height: 397px;
+			width: 1200px;
+			border: 1px;
+			margin: 20px auto;
+			position: relative;
+			overflow: hidden;
+		}
+		.slider{
+			width: 8400px;
+			position: absolute;
+			left:-1200px;
+		}
+		.slide{
+			width: 1200px;
+			overflow: hidden;
+			float: left;
+		}
+		.box>span{
+			display: block;
+			width: 30px;
+			height: 50px;
+			text-align: center;
+			cursor: pointer;
+			color: ;
+			top: 175px;
+			line-height: 50px;
+			background: rgb(255,0,0);
+			font-size: 30px;
+			position: absolute;
+			opacity: 0;
+		}
+		#left{
+			left: 30px;
+		}
+		#right{
+			right: 30px;
+		}
+		.nav{
+			position: absolute;
+			left: 500px;
+			bottom: 20px;
+		}
+		.nav>li{
+			float: left;
+			width: 20px;
+			height: 20px;
+			background: #ccc;
+			cursor: pointer;
+			margin: 0 10px;
+			border-radius: 50%;
+			text-align: center;
+			color: #666;
+		}
+		.nav .active{
+			background: red;
+		}
+		.list_con{ 
+			width: 800px;    
+		    height:24px;
+		    margin:10px auto 0;
+		    position:relative;
+		    overflow:hidden;
+	    }
+
+	    .list_con ul{
+	    	white-space: nowrap;
+	        list-style:none;
+	        width:2000px;
+	        height:200px;
+	        position:absolute;
+	        left:0;
+	        top:0;
+	    }
+	    .list_con li{
+	    	white-space: nowrap;
+	        list-style: none;
+	        width:1000px;
+	        height:180px;
+	        float:right;
+	        margin:3px;
+	        color: red;
+	        font-size: 12px;
+	        overflow: hidden;
+	    }
+	    .bigBox{
+	    	white-space: nowrap;
+	    	height: 24px;
+	    	background-color: #ccc;
+	    }
+	    #img1{
+	    	margin-top: 6px;
+	    	float: left;
+	    	white-space: nowrap;
+	    	margin-right: 50px;
+	    	width: 12px;
+	    }
+	</style>
+	<script src = "animate.js"></script>
+</head>
+<body>
+	<div class="bigBox">		
+		<div class="list_con" id="slide1">
+		<img src="imges/a15.png" id="img1">
+		 	<ul id="list">
+			    <li>[温馨提示]最近有不少骗子网上行骗,请大家注意！！！</li>
+		    </ul>	   
+	   </div>		
+	</div>							
+	<div class="box" id="box">
+		<div class="slider" id="slider">
+			<div class="slide"><img src="imges/b5.png"></div>
+			<div class="slide"><img src="imges/b1.png"></div>
+			<div class="slide"><img src="imges/b2.png"></div>
+			<div class="slide"><img src="imges/b3.png"></div>
+			<div class="slide"><img src="imges/b4.png"></div>
+			<div class="slide"><img src="imges/b5.png"></div>
+			<div class="slide"><img src="imges/b1.png"></div>
+		</div>
+		<span id="left"><</span>
+		<span id="right">></span>
+		<ul class="nav" id="nav">
+			<li class="active">1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+			<li>5</li>
+		</ul>
+	</div>	
+</body>
+<script type="text/javascript">
+	 	window.onload = function(){
+	        var oList = this.document.getElementById('list')
+	        var num = 0 
+	        var speed = -3
+	        var Timer = null
+	        oList.innerHTML += oList.innerHTML
+	        Timer = setInterval(fnMove, 50)
+	        function fnMove(){
+	          num += speed
+	          if(num < -1200)
+	          {
+	              num = 0
+	          }
+	          if(num>0)
+	          {
+	              num = -1000
+	          }
+	          oList.style.left = num +'px'
+	        }
+	    }
+		var box = document.getElementById("box");
+		var oNavlist = document.getElementById("nav").children;
+		var slider = document.getElementById("slider");
+		var left = document.getElementById("left");
+		var right = document.getElementById("right");
+		var index = 1;
+		var timer;
+		var isMoving = false;
+		box.onmouseover = function(){
+			animate(left,{opacity:50})
+			animate(right,{opacity:50})
+			clearInterval(timer)
+		}
+		box.onmouseout = function(){
+			animate(left,{opacity:0})
+			animate(right,{opacity:0})
+			timer = setInterval(next,1000);
+		}
+		right.onclick = next;
+		left.onclick = prev;
+		for (var i = 0; i < oNavlist.length; i++) {
+			oNavlist[i].index = i;
+			oNavlist[i].onclick = function(){
+				index = this.index+1;
+				navmove();
+				animate(slider,{left:-1200*index});
+			}
+		}
+		function next(){
+			if(isMoving){
+				return;
+			}
+			isMoving = true;
+			index++;
+			navmove();
+			animate(slider,{left:-1200*index},function(){
+				if (index ==6) {
+					slider.style.left = '-1200px';
+					index = 1;
+				}
+				isMoving = false;
+			});
+		}
+		function prev(){
+			if (isMoving) {
+				return;
+			}
+			isMoving = true;
+			index--;
+			navmove();
+			animate(slider,{left:-1200*index},function(){
+				if (index == 0) {
+					slider.style.left = '-6000px';
+					index = 5;
+				}
+				isMoving = false;
+			});
+		}
+		function navmove(){
+			for (var i = 0; i < oNavlist.length; i++) {
+				oNavlist[i].className = "";
+			}
+			if (index>5) {
+				oNavlist[0].className = "active";
+			}else if(index<=0){
+				oNavlist[4].className = "active";
+			}else{
+				oNavlist[index-1].className = "active";
+			}
+		}
+		timer = setInterval(next,3000);
+	</script>
+</html>
