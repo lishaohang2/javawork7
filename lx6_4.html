@@ -64,26 +64,32 @@
 			text-align: center;
 			color: #666;
 		}
+		.nav .active1{
+			color: red;
+		}
 		.nav .active{
 			background: red;
+			color: white;
 		}
 		.list_con{ 
-		       width: 800px;    
-		       height:24px;
-		       margin:10px auto 0;
-		       position:relative;
-		       overflow:hidden;
-		 }
+			width: 800px;
+			float: left;  
+		        height:24px;
+		        bottom: 10px;
+		        margin:10px auto 0;
+		        position:relative;
+		    	overflow:hidden;
+		    }
 
 		 .list_con ul{
-	                white-space: nowrap;
+			white-space: nowrap;
 			list-style:none;
 			width:2000px;
 			height:200px;
 			position:absolute;
 			left:0;
 			top:0;
-		    }
+		   }
 		  .list_con li{
 			white-space: nowrap;
 			list-style: none;
@@ -94,26 +100,26 @@
 			color: red;
 			font-size: 12px;
 			overflow: hidden;
-		  }
-		  .bigBox{
+		    }
+		   .bigBox{
 			white-space: nowrap;
 			height: 24px;
 			background-color: #ccc;
-		  }
-		  #img1{
-			margin-top: 6px;
+		    }
+		   #img1{
+			margin-top: 3px;
+			margin-right: 14px;
 			float: left;
 			white-space: nowrap;
-			margin-right: 50px;
-			width: 12px;
-		  }
+			margin-left: 350px;
+		    }
 	</style>
 	<script src = "animate.js"></script>
 </head>
 <body>
+	<img src="imges/a15.png" id="img1">
 	<div class="bigBox">		
 		<div class="list_con" id="slide1">
-		<img src="imges/a15.png" id="img1">
 		 	<ul id="list">
 			    <li>[温馨提示]最近有不少骗子网上行骗,请大家注意！！！</li>
 		    </ul>	   
@@ -132,7 +138,7 @@
 		<span id="left"><</span>
 		<span id="right">></span>
 		<ul class="nav" id="nav">
-			<li class="active">1</li>
+			<li class="active" id="red1">1</li>
 			<li>2</li>
 			<li>3</li>
 			<li>4</li>
@@ -143,16 +149,16 @@
 <script type="text/javascript">
 	 	window.onload = function(){
 	        var oList = this.document.getElementById('list')
-	        var num = 0 
+	        var num = -400 
 	        var speed = -3
 	        var Timer = null
 	        oList.innerHTML += oList.innerHTML
 	        Timer = setInterval(fnMove, 50)
 	        function fnMove(){
 	          num += speed
-	          if(num < -1400)
+	          if(num < -1300)
 	          {
-	              num = 0
+	              num = -200
 	          }
 	          if(num>0)
 	          {
@@ -177,7 +183,7 @@
 		box.onmouseout = function(){
 			animate(left,{opacity:0})
 			animate(right,{opacity:0})
-			timer = setInterval(next,1000);
+			timer = setInterval(next,3000);
 		}
 		right.onclick = next;
 		left.onclick = prev;
@@ -223,9 +229,13 @@
 			for (var i = 0; i < oNavlist.length; i++) {
 				oNavlist[i].className = "";
 			}
-			if (index>5) {
+			if (index>1&&index<=5) {
+				oNavlist[0].className = "active1";
+				oNavlist[index-1].className = "active";
+			}else if (index>5) {
 				oNavlist[0].className = "active";
-			}else if(index<=0){
+			}
+			else if(index<=0){
 				oNavlist[4].className = "active";
 			}else{
 				oNavlist[index-1].className = "active";
